@@ -9,6 +9,7 @@ from routes import routes
 load_dotenv()
 app = FastAPI()
 
+# app.mount()  # add static
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):

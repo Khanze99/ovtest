@@ -11,6 +11,9 @@ class Image(Base):
     name = Column(Text)
     image = Column(String)
 
+    def __repr__(self):
+        return f"Image: {self.name}"
+
 
 class NegativeImage(Base):
     __tablename__ = "negative_image"
@@ -19,5 +22,7 @@ class NegativeImage(Base):
     name = Column(Text)
     negative_image = Column(String)
     image_id = Column(Integer, ForeignKey("image.id"))
-    image = relationship("Image", backref=backref("image", uselist=False))
+    image = relationship("Image", backref=backref("original_image", uselist=False))
 
+    def __repr__(self):
+        return f"Negative image: {self.name}"
