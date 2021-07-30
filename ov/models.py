@@ -5,7 +5,7 @@ from core.database import Base
 
 
 class Image(Base):
-    __tablename__ = "images"
+    __tablename__ = "image"
 
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(Text)
@@ -13,11 +13,11 @@ class Image(Base):
 
 
 class NegativeImage(Base):
-    __tablename__ = "negative_images"
+    __tablename__ = "negative_image"
 
     id = Column(Integer, primary_key=True, index=True, unique=True)
     name = Column(Text)
     negative_image = Column(String)
-    image_id = Column(Integer, ForeignKey("images.id"))
-    image = relationship("Image", backref=backref("images", uselist=False))
+    image_id = Column(Integer, ForeignKey("image.id"))
+    image = relationship("Image", backref=backref("image", uselist=False))
 
