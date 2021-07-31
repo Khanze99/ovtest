@@ -1,14 +1,16 @@
-import base64
-
 from fastapi import APIRouter, Request
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from .schemas import ImageBase
+from .schemas import ImageBase, ImageCreate
 from core.utils import get_db
 from . import service
 from .templates import templates
-from .service import image2base64, base64_2_image
+from .service import (
+    image2base64, base64_2_image,
+    create_image_db, create_negative_image
+)
+from .config import settings
 
 router = APIRouter()
 
@@ -22,8 +24,10 @@ async def last_images(request: Request, db: Session = Depends(get_db)):
 
 
 @router.post('/negative_image/')
-async def post_negative_image(image: ImageBase):
+async def post_negative_image(image: ImageBase, db: Session = Depends(get_db)):
     image64 = image.image
-    image = base64_2_image(image64)
-    print(image)
-    return {}
+    image_filename = base64_2_image(image64)
+    negative_image = create_negative_image(image_filename)
+    cr_img = ImageCreate(**{'name': image.name, 'image': image_filename, 'negative_image': negative_image})
+    saved_image = create_image_db(db, cr_img)
+    return {"negative_image": image2base64(settings.NEGATIVE_IMAGE_URL + saved_image.negative_image)}

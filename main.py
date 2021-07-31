@@ -1,15 +1,14 @@
 from fastapi import FastAPI
 from starlette.requests import Request
 from starlette.responses import Response
-from dotenv import load_dotenv
+from pydantic import BaseSettings
 
 from core.database import SessionLocal
 from routes import routes
 
-load_dotenv()
-app = FastAPI()
 
-# app.mount()  # add static
+app = FastAPI()
+app.include_router(routes)
 
 
 @app.middleware("http")
@@ -22,4 +21,3 @@ async def db_session_middleware(request: Request, call_next):
         request.state.db.close()
     return response
 
-app.include_router(routes)
