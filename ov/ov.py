@@ -19,7 +19,8 @@ router = APIRouter()
 async def last_images(request: Request, db: Session = Depends(get_db)):
     images = service.get_last_images(db)
     for image in images:
-        image.image = image2base64(img_path=image.image)
+        image.image = image2base64(img_path=settings.ORIGINAL_IMAGE_URL + image.image)
+        image.negative_image = image2base64(img_path=settings.NEGATIVE_IMAGE_URL + image.negative_image)
     return templates.TemplateResponse("images.html", {"request": request, "images": images})
 
 

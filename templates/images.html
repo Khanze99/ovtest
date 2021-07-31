@@ -3,5 +3,6 @@
 {% block content %}
     {% for image in images %}
         <img src="{{ image.image }}">
+        <img src="{{ image.negative_image }}">
     {% endfor %}
 {% endblock %}
