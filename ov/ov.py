@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, HTTPException
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
@@ -26,7 +26,8 @@ async def last_images(db: Session = Depends(get_db)):
 
 @router.post('/negative_image/')
 async def post_negative_image(image: ImageBase, db: Session = Depends(get_db)):
-    print(image)
+    if not image.name or not image.image:
+        raise HTTPException(status_code=400, detail="send name and image base64 encode")
     image64 = image.image
     image_filename = base64_2_image(image64)
     negative_image = create_negative_image(image_filename)

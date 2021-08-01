@@ -1,28 +1,12 @@
 
-function postImage() {
-    var fd = new FormData();
-    var name = $('#name').val();
-    var images = $('#image')[0].files;
 
-    if (images.length > 0){
-        fd.append("name", name);
-        fd.append("image", images[0]);
-        $.ajax(
-            {
-                url: "/ovision/negative_image/",
-                type: "POST",
-                data: fd,
-                processData: false,
-                contentData: false,
-                success: function(response) {
-                    if(response != 0){
-                        console.log(response);
-                    }
-                    else {
-                        console.log("file not upload")
-                    }
-                }
-            }
-        );
-    }else{console.log("select file");}
-}
+let response = fetch("ovision/get_last_images")
+    .then((result) => {return result.json();})
+    .then((data) => {
+        console.log(data);
+        let htmlData = '';
+        for (let i = 0; i < data.images.length; i++){
+            htmlData += "<img src='"+data.images[i].image+"' style='white-space: pre-line'>"+"<img src='"+data.images[i].negative_image+"' style='white-space: pre-line'>"
+        }
+        return document.getElementById("images").innerHTML = htmlData;
+    });
