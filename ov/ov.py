@@ -1,11 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Form, UploadFile, File
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from .schemas import ImageBase, ImageCreate
 from core.utils import get_db
 from . import service
-from .templates import templates
 from .service import (
     image2base64, base64_2_image,
     create_image_db, create_negative_image

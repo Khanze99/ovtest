@@ -7,21 +7,18 @@
     <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', path='/main.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <title>Ovision</title>
 </head>
 <body>
     <h1 align="center">Ovision</h1>
     <div class="fo-form">
-        <form method="POST" action="ovision/negative_image/" enctype="multipart/form-data">
-            <input type="text" class="form-control" placeholder="name" id="name" name="name">
-            <div class="field-padding">
-                <input type="file" class="form-control field-padding" id="image" name="image">
-            </div>
-            <div class="field-padding">
-                <button class="btn btn-dark">Send</button>
-            </div>
-        </form>
+        <input type="text" class="form-control" placeholder="name" id="name" name="name">
+        <div class="field-padding">
+            <input type="file" class="form-control field-padding" id="image" name="image">
+        </div>
+        <div class="field-padding">
+            <button class="btn btn-dark" onclick="postImage()">Send</button>
+        </div>
     </div>
     <div id="images">
     </div>
