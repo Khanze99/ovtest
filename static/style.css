@@ -1,0 +1,11 @@
+.fo-form {
+    width: 30%;
+    min-width: 120px;
+    height: 30%;
+    padding: 10px;
+    background: #FFF;
+}
+
+.field-padding {
+    padding-top: 5px;
+}

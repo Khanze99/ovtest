@@ -20,7 +20,6 @@ def create_image_db(db: Session, image: ImageCreate):
     db.add(image)
     db.commit()
     db.refresh(image)
-
     return image
 
 
@@ -41,7 +40,6 @@ def image2base64(img_path: Optional[str]):
 
 def base64_2_image(image64: Optional[str]):
     """
-
     :param image64: str
     :return: img_path: str
     """
