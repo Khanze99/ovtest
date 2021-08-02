@@ -1,6 +1,16 @@
+import pytest
+from httpx import AsyncClient
+
+from core.main import app
 
 
-class TestRestOvision:
+@pytest.mark.asyncio
+async def test_root():
+    async with AsyncClient(app=app, base_url='http://test') as ac:
+        response = await ac.get('/')
+    assert response.status_code == 200
 
-    def test_get_images(self):
-        assert 1
+
+@pytest.mark.asyncio
+def test_create_image():
+    ...
