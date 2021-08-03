@@ -4,7 +4,7 @@ from starlette.responses import Response
 from fastapi.staticfiles import StaticFiles
 
 from core.database import SessionLocal
-from routes import routes
+from core.routes import routes
 from ov.templates import templates
 
 

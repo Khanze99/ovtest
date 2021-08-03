@@ -1,14 +1,16 @@
+from typing import Optional
+
 from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    DB_USER: str
-    DB_NAME: str
-    DB_HOST: str
-    DB_PASS: str
-    PSQL_DATABASE_URL: str
-    ORIGINAL_IMAGE_URL: str
-    NEGATIVE_IMAGE_URL: str
+    DB_USER: Optional[str]
+    DB_NAME: Optional[str]
+    DB_HOST: Optional[str]
+    DB_PASS: Optional[str]
+    PSQL_DATABASE_URL: Optional[str]
+    ORIGINAL_IMAGE_URL: Optional[str]
+    NEGATIVE_IMAGE_URL: Optional[str]
 
     class Config:
         env_file = '.env'
@@ -16,3 +18,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+

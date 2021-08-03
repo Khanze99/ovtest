@@ -1,16 +1,8 @@
 import pytest
-from httpx import AsyncClient
-
-from core.main import app
+from .test_sql_app import client
 
 
-@pytest.mark.asyncio
-async def test_root():
-    async with AsyncClient(app=app, base_url='http://test') as ac:
-        response = await ac.get('/')
-    assert response.status_code == 200
-
-
-@pytest.mark.asyncio
 def test_create_image():
-    ...
+    response = client.get('/get_last_images')
+    assert response.status_code == 200
+    assert response.json() == []

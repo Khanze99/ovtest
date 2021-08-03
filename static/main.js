@@ -1,38 +1,77 @@
+const imageObjects = [];
 
+const clearFileList = () => {
+    const elt = document.getElementById('images');
+    elt.innerHTML = '';
+    imageObjects.length = 0;
+};
 
-let response = fetch("ovision/get_last_images")
-    .then((result) => {return result.json();})
-    .then((data) => {
-        let htmlData = '';
-        for (let i = 0; i < data.images.length; i++){
-            htmlData += "<img src='"+data.images[i].image+"' style='white-space: pre-line'>"+"<img src='"+data.images[i].negative_image+"' style='white-space: pre-line'>"
-        }
-        return document.getElementById("images").innerHTML = htmlData;
-    });
+const postImage = () => {
+    const elt = document.getElementById('image');
+    const format = elt.value.split('.')[1];
+    const prefix = `data:image/${format};base64,`
+    const name = document.getElementById('name').value;
+    if (elt.files.length === 0) {
+        alert('No file selected!');
+        return;
+    }
 
-
-const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-    reader.onerror = error => reject(error);
-});
+    reader.onloadend = async () => {
+        const array = new Uint8Array(reader.result);
+        const data = await Base64.fromUint8Array(array);
+        elt.files[0];
+        const resp = await fetch('/ovision/negative_image', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: name,
+                image: prefix + data
+            }),
+        });
+        const json = resp.json();
+    }
+    reader.readAsArrayBuffer(elt.files[0]);
+}
 
+const addFileToList = (obj, prepend) => {
+    if (imageObjects.find(x => x.id === obj.id)){
+        return;
+    }
+    const elt = document.getElementById('images');
 
-function postImage() {
-    let fd = new FormData();
-    let name = $("#name").val();
-    let image = $("#image")[0].files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-        // console.log(reader.result);                   ---------------------- 1
-    };
-    reader.readAsDataURL(image)
-    // console.log(reader.result)                         ---------------------- 2
-    fd.append("name", name);
-    fd.append("image", reader.result);
-    fetch("ovision/negative_image/", {method: "POST", body: fd})
-        .then(res => res.json())
-        .then(data => {console.log(data);});
+    const tr = document.createElement('tr');
+    const origData = obj.image;
+    const negData = obj.negative_image;
+    const name = obj.name
+
+    tr.innerHTML = `
+        <td>${name}</td>
+        <td><img src="${origData}"</td>
+        <td><img src="${negData}"</td>`;
+
+    if (prepend) {
+        imageObjects.unshift(obj);
+    }else {
+        elt.appendChild(tr);
+        imageObjects.push(obj);
+    }
+};
+
+const loadLastImages = async () => {
+    const response = await fetch("ovision/get_last_images");
+    const json = await response.json();
+    if (response.status !== 200){
+        return;
+    }
+    clearFileList();
+    for (const image  of json.images) {
+        addFileToList(image);
+    }
+};
+
+window.onload = () => {
+    loadLastImages();
 }

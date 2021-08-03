@@ -2,10 +2,15 @@
     width: 30%;
     min-width: 120px;
     height: 30%;
-    padding: 10px;
+    padding-top: 10px;
     background: #FFF;
 }
 
 .field-padding {
     padding-top: 5px;
+}
+
+.link {
+    font-size: small;
+    text-align: right;
 }

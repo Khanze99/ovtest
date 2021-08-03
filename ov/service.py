@@ -43,7 +43,7 @@ def base64_2_image(image64: Optional[str]):
     :param image64: str
     :return: img_path: str
     """
-    pattern = r'(jpeg|png)'
+    pattern = r'(jpeg|png|jpg)'
     header, encoded = image64.split(',', 1)
     name = str(uuid.uuid4())
     img_format = re.findall(pattern, header)
