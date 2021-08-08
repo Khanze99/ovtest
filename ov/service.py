@@ -64,6 +64,10 @@ def create_negative_image(image: Optional[str]):
     """
     invert_filename = f'negative_{image}'
     img = Image.open(settings.ORIGINAL_IMAGE_URL + image)
+
+    if img.mode != 'RGB':
+        img = img.convert('RGB')
+
     img_invert = ImageOps.invert(img)
     img_invert.save(settings.NEGATIVE_IMAGE_URL + invert_filename)
 

@@ -67,7 +67,7 @@ const loadLastImages = async () => {
         return;
     }
     clearFileList();
-    for (const image  of json.images) {
+    for (const image of json) {
         addFileToList(image);
     }
 };

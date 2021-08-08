@@ -20,7 +20,7 @@ async def last_images(db: Session = Depends(get_db)):
     for image in images:
         image.image = image2base64(img_path=settings.ORIGINAL_IMAGE_URL + image.image)
         image.negative_image = image2base64(img_path=settings.NEGATIVE_IMAGE_URL + image.negative_image)
-    return {'images': images}
+    return images
 
 
 @router.post('/negative_image/')
