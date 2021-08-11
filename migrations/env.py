@@ -29,10 +29,10 @@ config = context.config
 
 section = config.config_ini_section
 config.set_section_option(section, 'sqlalchemy.url', environ.get('PSQL_DATABASE_URL'))
-config.set_section_option(section, 'DB_USER', environ.get('DB_USER'))
-config.set_section_option(section, 'DB_PASS', environ.get('DB_PASS'))
-config.set_section_option(section, 'DB_NAME', environ.get('DB_NAME'))
-config.set_section_option(section, 'DB_HOST', environ.get('DB_HOST'))
+config.set_section_option(section, 'DB_USER', environ.get('POSTGRES_USER'))
+config.set_section_option(section, 'DB_PASS', environ.get('POSTGRES_PASSWORD'))
+config.set_section_option(section, 'DB_NAME', environ.get('POSTGRES_DB'))
+config.set_section_option(section, 'DB_HOST', environ.get('POSTGRES_HOST'))
 
 fileConfig(config.config_file_name)
 

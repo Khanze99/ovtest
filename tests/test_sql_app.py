@@ -6,10 +6,9 @@ from sqlalchemy.orm import sessionmaker
 
 from core.main import app
 from core.database import Base
-from core.utils import get_db
-from ov.config import settings
+from ov.config import test_settings
 
-SQLALCHEMY_DATABASE_URL = settings.PSQL_DATABASE_URL
+SQLALCHEMY_DATABASE_URL = test_settings.PSQL_DATABASE_URL
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL
