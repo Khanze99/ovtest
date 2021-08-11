@@ -4,10 +4,10 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    DB_USER: Optional[str]
-    DB_NAME: Optional[str]
-    DB_HOST: Optional[str]
-    DB_PASS: Optional[str]
+    POSTGRES_USER: Optional[str]
+    POSTGRES_DB: Optional[str]
+    POSTGRES_HOST: Optional[str]
+    POSTGRES_PASSWORD: Optional[str]
     PSQL_DATABASE_URL: Optional[str]
     ORIGINAL_IMAGE_URL: Optional[str]
     NEGATIVE_IMAGE_URL: Optional[str]

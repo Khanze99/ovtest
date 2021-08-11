@@ -20,8 +20,6 @@ services:
       - /usr/bin/pg_config:/usr/bin/pg_config
     expose:
       - 5432
-    ports:
-      - 5432:5432
     env_file:
       - .env
 
